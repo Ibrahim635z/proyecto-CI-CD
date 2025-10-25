@@ -1,0 +1,47 @@
+name: CI/CD Despliegue de Documentación
+
+on:
+  push:
+    branches:
+      - main # Se ejecuta al subir a 'main'
+
+jobs:
+  build-test-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      #  Clona el código
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+    
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      
+      - name: Instalar dependencias (npm)
+        run: npm install
+
+     
+      - name: Ejecutar Pruebas Unitarias
+        run: npm test
+
+      
+      - name: Generar la página de documentación (JSDoc)
+        run: npm run docs
+
+     
+      - name: Desplegar Documentación en Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          # Usa el Token que guardamos en Secrets
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }} 
+          
+          # Despliega solo la carpeta de documentación
+          working-directory: ./docs
+          
+          # Despliega a producción 
+          vercel-args: '--prod'
