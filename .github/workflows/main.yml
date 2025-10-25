@@ -44,4 +44,4 @@ jobs:
           working-directory: ./docs
           
           # Despliega a producción 
-          vercel-args: '--prod'
+          vercel-args: '--prod --yes'
