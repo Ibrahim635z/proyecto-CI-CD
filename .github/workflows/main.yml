@@ -10,21 +10,21 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      #  Clona el código
+      # Clona el código
       - name: Checkout del código
         uses: actions/checkout@v4
 
-    
+     
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
 
-      
+ 
       - name: Instalar dependencias (npm)
         run: npm install
 
-     
+      
       - name: Ejecutar Pruebas Unitarias
         run: npm test
 
@@ -33,15 +33,21 @@ jobs:
         run: npm run docs
 
      
-      - name: Desplegar Documentación en Vercel
+      - name: (6) Desplegar Documentación en Vercel
         uses: amondnet/vercel-action@v25
         with:
-          # Usa el Token que guardamos en Secrets
+          
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }} 
           
-          # Despliega solo la carpeta de documentación
-          working-directory: ./docs
+         
+          # ID del Proyecto Vercel 
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          # ID de USUARIO Vercel
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           
-          # Despliega a producción 
-          vercel-args: '--prod --yes'
+          
+          # Carpeta a desplegar
+          working-directory: ./docs
+          # Argumento para forzar despliegue a producción
+          vercel-args: '--prod'
