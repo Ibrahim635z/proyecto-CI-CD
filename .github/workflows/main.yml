@@ -33,21 +33,20 @@ jobs:
         run: npm run docs
 
      
-      - name: (6) Desplegar Documentación en Vercel
+      - name: Desplegar Documentación en Vercel
         uses: amondnet/vercel-action@v25
         with:
           
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }} 
-          
-         
+    
           # ID del Proyecto Vercel 
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           # ID de USUARIO Vercel
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           
-          
           # Carpeta a desplegar
           working-directory: ./docs
           # Argumento para forzar despliegue a producción
           vercel-args: '--prod'
+          github-comment: false
