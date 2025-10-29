@@ -1,6 +1,7 @@
 name: CI/CD Despliegue de Documentación
 
 on:
+#workflow-dispatch para ejecutar manualmente
   push:
     branches:
       - main # Se ejecuta al subir a 'main'
